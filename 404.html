@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Page Not Found | Gauri Verma</title>
+    
+    <!-- Primary SEO Meta Tags -->
+    <meta name="robots" content="noindex, follow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .error-page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--bg-primary);
+        }
+
+        .error-card {
+            width: 100%;
+            max-width: 600px;
+            padding: 0;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .error-body {
+            padding: 32px;
+        }
+
+        .terminal-cmd {
+            margin-bottom: 16px;
+        }
+
+        .terminal-response {
+            color: #EF4444;
+            margin-bottom: 24px;
+        }
+
+        .terminal-actions {
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+            display: flex;
+            gap: 16px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .error-header-actions {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            display: flex;
+            gap: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="customCursorDot"></div>
+    <div class="cursor-outline" id="customCursorOutline"></div>
+
+    <div class="error-page-container">
+        <!-- Floating Ambient Gradient Blobs -->
+        <div class="blob blob-1" style="opacity: 0.12;"></div>
+        <div class="blob blob-2" style="opacity: 0.12;"></div>
+
+        <!-- Top Header Settings -->
+        <div class="error-header-actions">
+            <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Theme">
+                <i data-lucide="moon" class="icon-moon"></i>
+                <i data-lucide="sun" class="icon-sun"></i>
+            </button>
+        </div>
+
+        <!-- Error Card Simulated Terminal -->
+        <div class="error-card glass-card">
+            <!-- Simulated resume top bar -->
+            <div class="resume-viewer-bar">
+                <div class="viewer-dots">
+                    <span class="v-dot v-red"></span>
+                    <span class="v-dot v-yellow"></span>
+                    <span class="v-dot v-green"></span>
+                </div>
+                <div class="viewer-title mono">404_not_found.sh</div>
+                <div></div>
+            </div>
+
+            <div class="error-body">
+                <div class="terminal-cmd mono">
+                    <span class="text-primary">gauri@dev:~$</span> locate_page --route <span class="accent">current_url</span>
+                </div>
+                
+                <div class="terminal-response mono">
+                    <span>[ERROR] 404: The requested resource could not be found.</span>
+                </div>
+
+                <div class="about-text">
+                    It looks like you took a wrong turn, or the page has been moved. Let's get you back to safety.
+                </div>
+
+                <div class="terminal-actions">
+                    <a href="index.html" class="btn btn-primary">
+                        <i data-lucide="home"></i>
+                        <span>Return Home</span>
+                    </a>
+                    
+                    <a href="index.html#contact" class="btn btn-outline">
+                        <i data-lucide="mail"></i>
+                        <span>Report Bug</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+
+            // Theme Management
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    const activeTheme = document.documentElement.getAttribute('data-theme');
+                    const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                });
+            }
+
+            // Custom Cursor tracking
+            const cursorDot = document.getElementById('customCursorDot');
+            const cursorOutline = document.getElementById('customCursorOutline');
+            
+            if (cursorDot && cursorOutline) {
+                let mouseX = 0, mouseY = 0;
+                let outlineX = 0, outlineY = 0;
+                let isMoving = false;
+
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    
+                    if (!isMoving) {
+                        cursorDot.style.opacity = '1';
+                        cursorOutline.style.opacity = '1';
+                        isMoving = true;
+                    }
+                    cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+                });
+
+                const animateCursor = () => {
+                    outlineX += (mouseX - outlineX) * 0.15;
+                    outlineY += (mouseY - outlineY) * 0.15;
+                    cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+                    requestAnimationFrame(animateCursor);
+                };
+                requestAnimationFrame(animateCursor);
+
+                const interactiveElements = document.querySelectorAll('a, button');
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%) scale(1.6)`;
+                        cursorOutline.style.backgroundColor = 'rgba(59, 130, 246, 0.05)';
+                        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(0)`;
+                    });
+                    
+                    el.addEventListener('mouseleave', () => {
+                        cursorOutline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%) scale(1)`;
+                        cursorOutline.style.backgroundColor = 'transparent';
+                        cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(1)`;
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
