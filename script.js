@@ -14,9 +14,9 @@ if (navToggle) {
     navLinks.style.top = '68px';
     navLinks.style.left = '0';
     navLinks.style.right = '0';
-    navLinks.style.background = '#141b24';
+    navLinks.style.background = '#faf7f2';
     navLinks.style.padding = '20px 28px';
-    navLinks.style.borderBottom = '1px solid #2a3441';
+    navLinks.style.borderBottom = '1px solid #e7e0d2';
     navLinks.style.gap = '16px';
   });
 }

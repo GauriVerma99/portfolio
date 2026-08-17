@@ -184,8 +184,18 @@ h1, h2, h3 {
   overflow: hidden;
   background: var(--surface);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Make the whole card behave like a link */
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
-.project-card:hover { transform: translateY(-5px); box-shadow: 0 24px 45px -24px rgba(28,27,25,0.25); }
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 45px -24px rgba(28,27,25,0.25);
+}
+
 .project-image { aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-alt); }
 .project-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .project-image-placeholder {
